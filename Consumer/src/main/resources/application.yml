@@ -2,8 +2,7 @@ spring:
   profiles:
     active: local
 server:
-  port:8081
-
+  port: 8082
 ---
 spring:
   config:
@@ -11,7 +10,8 @@ spring:
       on-profile: local
   kafka:
     consumer:
-      bootstrap-servers: localhost:9091
+      bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      group-id: final-boss-consumer
 

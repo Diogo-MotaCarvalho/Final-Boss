@@ -22,8 +22,6 @@ import static org.apache.kafka.clients.CommonClientConfigs.RETRIES_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 @Configuration
-@ConfigurationProperties("kafka")
-@Data
 public class KafkaProducerConfig {
 
     @Bean
@@ -31,9 +29,9 @@ public class KafkaProducerConfig {
         return new JsonSerializer<MarketUpdate>();
     }
 
-    @Value("${kafka.producers-module.producers.topics}")
-    private String topic;
-    @Value("${kafka.producers-module.producers.bootstrap-servers}")
+    //@Value("${kafka.producers.topics}")
+    //private String topic;
+    @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
 
 
