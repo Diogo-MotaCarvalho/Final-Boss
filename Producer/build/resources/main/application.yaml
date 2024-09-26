@@ -1,0 +1,5 @@
+kafka:
+  producers-module:
+    producers:
+      bootstrap-servers: localhost:8081
+      topics: demo
