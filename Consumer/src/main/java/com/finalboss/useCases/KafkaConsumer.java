@@ -36,31 +36,29 @@ public class KafkaConsumer implements Consumer {
 
         JsonNode recordData = objectMapper.readTree(record.value());
 
-        System.out.println(recordData.toString());
-
-        String recordId = recordData.get("id").toString();
-
-        String recordName = recordData.get("name").asText(  "null");
-        String recordOperation= recordData.get("operation").asText(  "null");
-
-        JsonNode recordEvent = recordData.get("event");
-        String eventId = recordEvent.get("id").asText(  "null");
-        String eventName = recordEvent.get("name").asText(  "null");
-        String eventDate = recordEvent.get("date").asText(  "null");
-
         JsonNode selectionsArray =recordData.get("selections");
-        List<Selection> selections = objectMapper.convertValue(selectionsArray, List.class);
 
         List<Market> markets = new ArrayList<>();
-
-        Market market = new Market(recordId,recordName,selections);
+        Market market = new Market(
+                recordData.get("id").asText(  "null"),
+                recordData.get("name").asText(  "null"),
+                objectMapper.convertValue(selectionsArray, List.class)
+        );
         markets.add(market);
 
-        YellowEvent yellowEvent = new YellowEvent(eventId,eventName,eventDate ,markets);
+        JsonNode recordEvent = recordData.get("event");
+        YellowEvent yellowEvent = new YellowEvent(
+                recordEvent.get("id").asText(  "null"),
+                recordEvent.get("name").asText(  "null"),
+                recordEvent.get("date").asText(  "null"),
+                markets
+        );
+
+        //Unused for now
+        String recordOperation= recordData.get("operation").asText(  "null");
+
 
         System.out.println(yellowEvent);
-
-
         return yellowEvent;
     }
 
