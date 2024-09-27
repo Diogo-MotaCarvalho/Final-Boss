@@ -3,7 +3,8 @@ package com.finalboss.domain;
 import java.util.List;
 
 public record YellowEvent(
-         int id,
+         String id,
          String name,
+         String date,
          List<Market> markets
 ) {}
