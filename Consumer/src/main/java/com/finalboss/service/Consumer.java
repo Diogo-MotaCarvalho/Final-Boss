@@ -21,10 +21,13 @@ public class Consumer {
         this.kafkaConsumer = kafkaConsumer;
     }
 
+
+
     @KafkaListener(topics={"demo"},groupId = "final-boss-consumer")
     public void onMessage(ConsumerRecord<String, String> record) throws JsonProcessingException {
         log.info("operation=reading, message='reading a message', message='{}'", record);
         kafkaConsumer.buildYellowEvent(record);
+
     }
 
 }

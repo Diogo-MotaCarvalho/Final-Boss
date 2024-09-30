@@ -3,16 +3,12 @@ package com.finalboss.useCases;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.finalboss.domain.Market;
-import com.finalboss.domain.Selection;
 import com.finalboss.domain.YellowEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,6 @@ public class KafkaConsumer implements Consumer {
     public KafkaConsumer(KafkaTemplate<String, ?> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
-
     @Override
     public YellowEvent buildYellowEvent(@RequestBody ConsumerRecord<String, String> record) throws JsonProcessingException {
 
@@ -62,5 +57,16 @@ public class KafkaConsumer implements Consumer {
         return yellowEvent;
     }
 
+    public void readOperation(@RequestBody ConsumerRecord<String, String> record) throws JsonProcessingException {
+        JsonNode recordData = objectMapper.readTree(record.value());
+        String recordOperation= recordData.get("operation").asText(  "null");
+        if(recordOperation.equals("ADD")){
+
+        }else if(recordOperation.equals("MODIFY")){
+
+        }else if(recordOperation.equals("DELETE")){
+
+        }
+    }
 
 }
