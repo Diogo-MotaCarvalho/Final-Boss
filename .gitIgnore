@@ -11,7 +11,6 @@ Thumbs.db
 *.class
 target/
 *.log
-.gradle/
 
 # IDEs and Editors
 .vscode/
@@ -31,6 +30,7 @@ target/
 *.swo
 *.bak
 *.tmp
+/*.gradle/
 
 # Archive files
 *.zip
@@ -40,3 +40,4 @@ target/
 # Misc
 *.DS_Store
 *.iml
+/.gradle/

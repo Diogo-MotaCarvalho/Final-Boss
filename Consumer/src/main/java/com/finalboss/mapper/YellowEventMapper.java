@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class YellowEventMapper {
 
-    public YellowEvent buildYellowEvent(MarketUpdate update) throws JsonProcessingException {
+    public YellowEvent buildYellowEvent(MarketUpdate update){
         return new YellowEvent(update.event().id(),
                 update.event().name(),
                 update.event().date(),
