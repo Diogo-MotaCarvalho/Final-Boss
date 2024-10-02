@@ -24,7 +24,7 @@ public class Consumer {
 
 
 
-    @KafkaListener(topics={"demo"},groupId = "final-boss-consumer")
+    @KafkaListener(topics={"${spring.kafka.consumer.topic}"},groupId = "final-boss-consumer")
     public void onMessage(@Payload MarketUpdate message) throws JsonProcessingException {
         log.info("operation=onMessage, message='reading a message', message='{}'", message);
         eventHandler.readOperation(message);

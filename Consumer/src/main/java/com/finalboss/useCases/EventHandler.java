@@ -1,13 +1,12 @@
 package com.finalboss.useCases;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.finalboss.domain.Market;
 import com.finalboss.domain.MarketUpdate;
 import com.finalboss.domain.Operation;
 import com.finalboss.domain.YellowEvent;
 import com.finalboss.mapper.YellowEventMapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -27,7 +26,7 @@ public class EventHandler implements EventHandlerI {
     }
 
     @Override
-    public void readOperation(MarketUpdate update) throws JsonProcessingException {
+    public void readOperation(MarketUpdate update) {
         switch (update.operation()) {
             case Operation.ADD -> addYellowEventToRepository(update);
             case Operation.MODIFY -> modifyYellowEventInRepository(update);
@@ -42,7 +41,7 @@ public class EventHandler implements EventHandlerI {
      * If not, add that market to the list of markets of that Event.
      * If already exists then you can ignore that email.
      */
-    private void addYellowEventToRepository(MarketUpdate update) throws JsonProcessingException {
+    private void addYellowEventToRepository(MarketUpdate update) {
         // Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
         Optional<YellowEvent> event = yellowEventRepositoryI.findById(yellowEventUpdate.id());
@@ -62,7 +61,7 @@ public class EventHandler implements EventHandlerI {
                 event.get().markets().add(yellowEventUpdate.markets().getFirst());
                 yellowEventRepositoryI.save(event.get());
             }
-        }else{
+        } else {
             // If the Event does not exist then it must be added with the market received.
             yellowEventRepositoryI.save(yellowEventUpdate);
         }
@@ -74,14 +73,14 @@ public class EventHandler implements EventHandlerI {
      * If it already exists then you should update its name and selections with the ones received in the email.
      * If it doesn't exist you can ignore that email.
      */
-    private void modifyYellowEventInRepository(MarketUpdate update) throws JsonProcessingException {
+    private void modifyYellowEventInRepository(MarketUpdate update) {
         //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
         if (yellowEventRepositoryI.existsById(yellowEventUpdate.id())) {
             //If it exists then verify if it has a Market with the id received in the email.
             Optional<YellowEvent> event = yellowEventRepositoryI.findById(yellowEventUpdate.id());
 
-            List<Market> markets = event.get().markets();
+            List<Market> markets = event.map(YellowEvent::markets).orElse(Collections.emptyList());
 
             for (Market market : markets) {
                 //If it already exists then you should update its name and selections with the ones received in the email.
@@ -100,7 +99,7 @@ public class EventHandler implements EventHandlerI {
         //If it doesn't exist you can ignore that email.
     }
 
-    private void removeYellowEventFromRepository(MarketUpdate update) throws JsonProcessingException {
+    private void removeYellowEventFromRepository(MarketUpdate update) {
 
     }
 

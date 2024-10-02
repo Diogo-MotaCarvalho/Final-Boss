@@ -30,6 +30,7 @@ target/
 *.swo
 *.bak
 *.tmp
+.gradle
 
 # Archive files
 *.zip
