@@ -8,6 +8,8 @@
       <module name="Consumer" target="22" />
       <module name="Consumer.main" target="22" />
       <module name="Consumer.test" target="22" />
+      <module name="Final-Boss.main" target="21" />
+      <module name="Final-Boss.test" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>
