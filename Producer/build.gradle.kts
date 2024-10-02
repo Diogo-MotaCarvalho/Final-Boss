@@ -34,6 +34,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
+tasks.register<Wrapper>("wrapper") {
+    gradleVersion = "8.8"
+}
+tasks.register("prepareKotlinBuildScriptModel"){}
+
 tasks.test {
     useJUnitPlatform()
 }

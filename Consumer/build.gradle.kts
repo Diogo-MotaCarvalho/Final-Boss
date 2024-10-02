@@ -29,6 +29,9 @@ dependencies {
     compileOnly ("org.projectlombok:lombok:1.18.34")
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
     implementation ("org.springframework.data:spring-data-mongodb:4.3.4")
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.3.4")
+
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -40,5 +43,4 @@ tasks.register("prepareKotlinBuildScriptModel"){}
 
 tasks.test {
     useJUnitPlatform()
-
 }
