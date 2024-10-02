@@ -11,7 +11,7 @@ Thumbs.db
 *.class
 target/
 *.log
-.gradle/
+.gradle/*
 
 # IDEs and Editors
 .vscode/
