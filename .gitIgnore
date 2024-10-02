@@ -1,0 +1,41 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+*.log
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.class
+target/
+*.log
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Build files
+/dist/
+/build/
+/out/
+*.apk
+*.app
+
+# Other
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Misc
+*.DS_Store
+*.iml
