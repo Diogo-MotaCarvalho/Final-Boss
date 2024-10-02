@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document (collection = "market")
+@Document(collection = "market")
 public record Market(
         @Id
         String id,
         String name,
-        List<Selection> selections
-) {}
+        List<Selection> selections) {
+}

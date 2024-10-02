@@ -2,98 +2,99 @@ package com.finalboss.useCases;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalboss.domain.Market;
+import com.finalboss.domain.MarketUpdate;
+import com.finalboss.domain.Operation;
 import com.finalboss.domain.YellowEvent;
-import com.finalboss.service.YellowEventRepositoryI;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
+import com.finalboss.mapper.YellowEventMapper;
 
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
-@Component
+
 public class EventHandler implements EventHandlerI {
 
     private static final Logger log = Logger.getLogger(EventHandler.class.getName());
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    private final YellowEventRepositoryI yellowEventRepositoryI;
 
-    private YellowEventRepositoryI yellowEventRepositoryI;
+    private final YellowEventMapper yellowEventMapper;
 
-    private final KafkaTemplate<String,?> kafkaTemplate;
-
-    public EventHandler(KafkaTemplate<String, ?> kafkaTemplate, YellowEventRepositoryI yellowEventRepositoryI) {
+    public EventHandler(YellowEventRepositoryI yellowEventRepositoryI, YellowEventMapper yellowEventMapper) {
         this.yellowEventRepositoryI = yellowEventRepositoryI;
-        this.kafkaTemplate = kafkaTemplate;
+        this.yellowEventMapper = yellowEventMapper;
     }
 
     @Override
-    public void readOperation(ConsumerRecord<String, String> record) throws JsonProcessingException {
-        JsonNode recordData = objectMapper.readTree(record.value());
-        String recordOperation= recordData.get("operation").asText(  "null");
-        if(recordOperation.equals("ADD")){
-            addYellowEventToRepository(record);
-        }else if(recordOperation.equals("MODIFY")){
-
-        }else if(recordOperation.equals("DELETE")){
-
+    public void readOperation(MarketUpdate update) throws JsonProcessingException {
+        switch (update.operation()) {
+            case Operation.ADD -> addYellowEventToRepository(update);
+            case Operation.MODIFY -> modifyYellowEventInRepository(update);
+            case Operation.DELETE -> removeYellowEventFromRepository(update);
         }
     }
 
-    public void addYellowEventToRepository(ConsumerRecord<String, String> record) throws JsonProcessingException {
-        JsonNode recordData = objectMapper.readTree(record.value());
+    /**
+     * Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
+     * If the Event does not exist then it must be added with the market received.
+     * If the Event exists then verify if it has a Market with the id received in the email.
+     * If not, add that market to the list of markets of that Event.
+     * If already exists then you can ignore that email.
+     */
+    private void addYellowEventToRepository(MarketUpdate update) throws JsonProcessingException {
+        // Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
+        YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
 
-        if(yellowEventRepositoryI.existsById(recordData.get("id").asText(  "null"))){
-            if(yellowEventRepositoryI.existsById(buildMarket(record).id())){
+        if (yellowEventRepositoryI.existsById(yellowEventUpdate.id())) {
+            // If the Event exists then verify if it has a Market with the id received in the email.
+            Optional<YellowEvent> event = yellowEventRepositoryI.findById(yellowEventUpdate.id());
+            List<Market> markets = event.get().markets();
 
+            boolean hasMarket = false;
+            for (Market market : markets) {
+                //If already exists then you can ignore that email.
+                if (market.id().equals(update.id())) {
+                    hasMarket = true;
+                    break;
+                }
             }
-        }else {
-            yellowEventRepositoryI.save(buildYellowEvent(record));
+            //If not, add that market to the list of markets of that Event.
+            if (!hasMarket) {
+                event.get().markets().add(yellowEventUpdate.markets().getFirst());
+                yellowEventRepositoryI.save(event.get());
+            }
+        }
+        // If the Event does not exist then it must be added with the market received.
+        yellowEventRepositoryI.save(yellowEventUpdate);
+    }
+
+    /**
+     * Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
+     * If it exists then verify if it has a Market with the id received in the email.
+     * If it already exists then you should update its name and selections with the ones received in the email.
+     * If it doesn't exist you can ignore that email.
+     */
+    private void modifyYellowEventInRepository(MarketUpdate update) throws JsonProcessingException {
+        //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
+        YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
+        if (!yellowEventRepositoryI.existsById(yellowEventUpdate.id())) {}
+
+
+
+    }
+
+    private void removeYellowEventFromRepository(MarketUpdate update) throws JsonProcessingException {
+        JsonNode recordData = objectMapper.readTree(record.value());
+        String eventID = recordData.get("id").asText("null");
+        Market market = buildMarket(record);
+
+        if (yellowEventRepositoryI.existsById(eventID)) {
+            if (yellowEventRepositoryI.existsById(market.id())) {
+                yellowEventRepositoryI.deleteById(market.id());
+            }
         }
 
-
     }
 
-    //Metodos auxiloares
-
-
-    public YellowEvent buildYellowEvent(ConsumerRecord<String, String> record) throws JsonProcessingException {
-
-        JsonNode recordData = objectMapper.readTree(record.value());
-
-        List<Market> markets = new ArrayList<>();
-        buildMarket(record);
-        markets.add(buildMarket(record));
-
-        JsonNode recordEvent = recordData.get("event");
-        YellowEvent yellowEvent = new YellowEvent(
-                recordEvent.get("id").asText(  "null"),
-                recordEvent.get("name").asText(  "null"),
-                recordEvent.get("date").asText(  "null"),
-                markets
-        );
-
-        System.out.println(yellowEvent);
-        return yellowEvent;
-    }
-
-    public Market buildMarket(ConsumerRecord<String, String> record) throws JsonProcessingException {
-
-        JsonNode recordData = objectMapper.readTree(record.value());
-
-        JsonNode selectionsArray =recordData.get("selections");
-
-
-        Market market = new Market(
-                recordData.get("id").asText(  "null"),
-                recordData.get("name").asText(  "null"),
-                objectMapper.convertValue(selectionsArray, List.class)
-        );
-
-        return market;
-    }
 }
