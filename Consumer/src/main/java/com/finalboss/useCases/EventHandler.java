@@ -5,26 +5,21 @@ import com.finalboss.domain.MarketUpdate;
 import com.finalboss.domain.Operation;
 import com.finalboss.domain.YellowEvent;
 import com.finalboss.mapper.YellowEventMapper;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-
 public class EventHandler implements EventHandlerI {
 
     private static final Logger log = Logger.getLogger(EventHandler.class.getName());
-
     private final YellowEventRepositoryI yellowEventRepositoryI;
-
     private final YellowEventMapper yellowEventMapper;
 
     public EventHandler(YellowEventRepositoryI yellowEventRepositoryI, YellowEventMapper yellowEventMapper) {
         this.yellowEventRepositoryI = yellowEventRepositoryI;
         this.yellowEventMapper = yellowEventMapper;
     }
-
     @Override
     public void readOperation(MarketUpdate update) {
         switch (update.operation()) {
@@ -33,7 +28,6 @@ public class EventHandler implements EventHandlerI {
             case Operation.DELETE -> removeYellowEventFromRepository(update);
         }
     }
-
     /**
      * Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
      * If the Event does not exist then it must be added with the market received.
@@ -66,7 +60,6 @@ public class EventHandler implements EventHandlerI {
             yellowEventRepositoryI.save(yellowEventUpdate);
         }
     }
-
     /**
      * Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
      * If it exists then verify if it has a Market with the id received in the email.
@@ -76,12 +69,10 @@ public class EventHandler implements EventHandlerI {
     private void modifyYellowEventInRepository(MarketUpdate update) {
         //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
-        if (yellowEventRepositoryI.existsById(yellowEventUpdate.id())) {
+        Optional<YellowEvent> event = yellowEventRepositoryI.findById(yellowEventUpdate.id());
+        if (event.isPresent()) {
             //If it exists then verify if it has a Market with the id received in the email.
-            Optional<YellowEvent> event = yellowEventRepositoryI.findById(yellowEventUpdate.id());
-
             List<Market> markets = event.map(YellowEvent::markets).orElse(Collections.emptyList());
-
             for (Market market : markets) {
                 //If it already exists then you should update its name and selections with the ones received in the email.
                 if (market.id().equals(update.id())) {
@@ -98,9 +89,31 @@ public class EventHandler implements EventHandlerI {
         }
         //If it doesn't exist you can ignore that email.
     }
-
+    /**
+     * Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
+     * If it exists then verify if it has a Market with the id received in the email.
+     * If it exists then you should remove the Market from that Event.
+     * If that Market does not exist in the specified Event then you can ignore that email.
+     */
     private void removeYellowEventFromRepository(MarketUpdate update) {
-
+        YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
+        Optional<YellowEvent> event = yellowEventRepositoryI.findById(yellowEventUpdate.id());
+        //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
+        if (event.isPresent()) {
+            //If it exists then verify if it has a Market with the id received in the email.
+            List<Market> markets = event.map(YellowEvent::markets).orElse(Collections.emptyList());
+            for (Market market : markets) {
+                //If it exists then you should remove the Market from that Event.
+                if (market.id().equals(update.id())) {
+                    markets.remove(market);
+                    yellowEventRepositoryI.save(new YellowEvent(
+                            event.get().id(),
+                            event.get().name(),
+                            event.get().date(),
+                            markets
+                    ));
+                }
+            }
+        }
     }
-
 }
