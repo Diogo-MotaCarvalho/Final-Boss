@@ -1,8 +1,6 @@
 package com.finalboss.service;
 
-import com.finalboss.domain.Market;
 import com.finalboss.domain.MarketUpdate;
-import lombok.val;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
