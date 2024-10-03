@@ -4,14 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.finalboss.domain.Market;
 import com.finalboss.domain.MarketUpdate;
 import com.finalboss.domain.YellowEvent;
+import com.finalboss.service.Consumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class YellowEventMapper {
+    private static final Logger log = LoggerFactory.getLogger(YellowEventMapper.class);
 
     public YellowEvent buildYellowEvent(MarketUpdate update){
+        log.info("operation=buildYellowEvent, message='building YellowEvent', update='{}'", update);
         return new YellowEvent(update.event().id(),
                 update.event().name(),
                 update.event().date(),
@@ -20,10 +25,12 @@ public class YellowEventMapper {
     }
 
     public Market buildMarket(MarketUpdate update) {
+        log.info("operation=buildYellowEvent, message='building Market', update='{}'", update);
         return new Market(
                 update.id(),
                 update.name(),
                 update.selections()
         );
+
     }
 }
