@@ -39,26 +39,26 @@ public class EventHandler implements Handler {
         }
     }
 
+    /**
+     * //TODO Try to write a javadoc for every method that has considerable logic, so that others and even your future self,
+     * can more easily understand what this does
+     * @param update
+     */
+
     private void addYellowEventToRepository(MarketUpdate update) {
         log.info("operation=addYellowEventToRepository, message='trying to add event to repository', update='{}'", update);
         // Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
         Optional<YellowEvent> event = repo.findById(yellowEventUpdate.id());
         if (event.isPresent()) {
+
             // If the Event exists then verify if it has a Market with the id received in the email.
             List<Market> markets = event.get().markets();
-            boolean hasMarket = false;
-            for (Market market : markets) {
-                //If already exists then you can ignore that email.
-                if (market.id().equals(update.id())) {
-                    hasMarket = true;
-                    log.info("operation=addYellowEventToRepository, message='market already exists in event', update='{}'", update);
-                    break;
-                }
-            }
+            boolean alreadyHasMarket = markets.stream().anyMatch(market -> update.id().equals(market.id()));
+
             //If not, add that market to the list of markets of that Event.
-            if (!hasMarket) {
-                event.get().markets().add(yellowEventUpdate.markets().getFirst());
+            if (!alreadyHasMarket) {
+                markets.add(yellowEventUpdate.markets().getFirst());
                 log.info("operation=addYellowEventToRepository, message='trying to a new market to existing event', update='{}'", update);
                 saveWithTryCatch(event.get());
                 log.info("operation=addYellowEventToRepository, message='marked successfully added', update='{}'", update);
