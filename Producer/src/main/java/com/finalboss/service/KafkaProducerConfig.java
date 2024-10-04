@@ -18,7 +18,6 @@ import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.kafka.clients.CommonClientConfigs.RETRIES_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 @Configuration
