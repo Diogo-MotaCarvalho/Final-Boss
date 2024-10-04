@@ -18,9 +18,6 @@ class KafkaPublisherTest {
     MarketUpdate update;
 
     @Mock
-    CompletableFuture<SendResult<String, MarketUpdate>> future;
-
-    @Mock
     KafkaTemplate<String, MarketUpdate> kafkaTemplate;
 
     String topic = "demo";
