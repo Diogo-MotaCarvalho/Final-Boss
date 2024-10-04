@@ -20,11 +20,13 @@ public class EventHandler implements EventHandlerI {
     private static final Logger log = LoggerFactory.getLogger(EventHandler.class);
     private final YellowEventRepository repo;
     private final YellowEventMapper yellowEventMapper;
+    private final EventPublisher eventPublisher;
 
 
-    public EventHandler(YellowEventRepository repo, YellowEventMapper yellowEventMapper) {
+    public EventHandler(YellowEventRepository repo, YellowEventMapper yellowEventMapper, EventPublisher eventPublisher) {
         this.repo = repo;
         this.yellowEventMapper = yellowEventMapper;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -59,12 +61,14 @@ public class EventHandler implements EventHandlerI {
                 log.info("operation=addYellowEventToRepository, message='trying to a new market to existing event', update='{}'", update);
                 saveWithTryCatch(event.get());
                 log.info("operation=addYellowEventToRepository, message='marked successfully added', update='{}'", update);
+                publishWithLogs(event.get());
             }
         } else {
             // If the Event does not exist then it must be added with the market received.
             log.info("operation=addYellowEventToRepository, message='trying to create a new event', update='{}'", update);
             saveWithTryCatch(yellowEventUpdate);
             log.info("operation=addYellowEventToRepository, message='new event successfully created', update='{}'", update);
+            publishWithLogs(yellowEventUpdate);
         }
     }
 
@@ -82,13 +86,14 @@ public class EventHandler implements EventHandlerI {
                 if (market.id().equals(update.id())) {
                     markets.remove(market);
                     markets.add(yellowEventUpdate.markets().getFirst());
-                    saveWithTryCatch(new YellowEvent(
+                    YellowEvent eventToPublish = saveWithTryCatch(new YellowEvent(
                             event.get().id(),
                             yellowEventUpdate.name(),
                             event.get().date(),
                             markets
                     ));
                     log.info("operation=modifyYellowEventInRepository, message='market successfully modified', update='{}'", update);
+                    publishWithLogs(eventToPublish);
                 }
             }
         } else {
@@ -112,6 +117,7 @@ public class EventHandler implements EventHandlerI {
                     markets.remove(market);
                     saveWithTryCatch(event.get());
                     log.info("operation=removeMarketFromEventInRepository, message='successfully removed a market', update='{}'", update);
+                    publishWithLogs(event.get());
                 }
             }
         } else {
@@ -119,12 +125,19 @@ public class EventHandler implements EventHandlerI {
         }
     }
 
-    public void saveWithTryCatch(YellowEvent yellowEvent) {
+    public YellowEvent saveWithTryCatch(YellowEvent yellowEvent) {
         try {
             repo.save(yellowEvent);
+            return yellowEvent;
         } catch (Exception e) {
             log.error("operation=addYellowEventToRepository, message='failed to save yellow event', yellowEvent='{}'", yellowEvent, e);
+            return yellowEvent;
         }
+    }
 
+    public void publishWithLogs(YellowEvent yellowEvent) {
+        log.info("operation=addYellowEventToRepository, message='trying to publish event', update='{}'", yellowEvent);
+        eventPublisher.publish(yellowEvent);
+        log.info("operation=addYellowEventToRepository, message='event successfully published', update='{}'", yellowEvent);
     }
 }

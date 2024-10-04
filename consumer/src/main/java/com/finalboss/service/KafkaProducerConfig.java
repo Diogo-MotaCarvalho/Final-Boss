@@ -26,7 +26,7 @@ public class KafkaProducerConfig {
 
     @Bean
     public JsonSerializer<YellowEvent> jsonSerializer() {
-        return new JsonSerializer<YellowEvent>();
+        return new JsonSerializer<>();
     }
 
     @Bean
@@ -44,6 +44,6 @@ public class KafkaProducerConfig {
 
     @Bean
     public KafkaTemplate<String, YellowEvent> kafkaTemplate(ProducerFactory<String, YellowEvent> producerFactory) {
-        return new KafkaTemplate<String, YellowEvent>(producerFactory);
+        return new KafkaTemplate<>(producerFactory);
     }
 }
