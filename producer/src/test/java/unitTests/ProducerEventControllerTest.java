@@ -4,8 +4,8 @@ import com.finalboss.domain.Event;
 import com.finalboss.domain.MarketUpdate;
 import com.finalboss.domain.Operation;
 import com.finalboss.domain.Selection;
-import com.finalboss.http.ProducerEventController;
-import com.finalboss.useCases.KafkaPublisher;
+import com.finalboss.port.ProducerEventController;
+import com.finalboss.port.KafkaPublisher;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 
 
 @ExtendWith(MockitoExtension.class)
-public class ProducerEventControllerTest {
+class ProducerEventControllerTest {
 
     Event event= new Event("3","Benfica vs Sporting","27/10/2023");
 

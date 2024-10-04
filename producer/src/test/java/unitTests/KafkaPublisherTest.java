@@ -1,7 +1,7 @@
 package unitTests;
 
 import com.finalboss.domain.MarketUpdate;
-import com.finalboss.useCases.KafkaPublisher;
+import com.finalboss.port.KafkaPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

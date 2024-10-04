@@ -1,4 +1,4 @@
-package com.finalboss.service;
+package com.finalboss.port;
 
 import com.finalboss.domain.MarketUpdate;
 import com.finalboss.useCases.EventHandler;
@@ -25,6 +25,5 @@ public class Consumer {
         log.info("operation=onMessage, message='reading a message', message='{}'", message);
         eventHandler.readOperation(message.getFirst());
         log.info("operation=onMessage, message='operation successful', message='{}'", message);
-
     }
 }

@@ -1,4 +1,4 @@
-package com.finalboss.service;
+package com.finalboss.config;
 
 import com.finalboss.domain.YellowEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -19,8 +19,6 @@ import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS
 @Configuration
 public class KafkaProducerConfig {
 
-    //@Value("${kafka.producers.topics}")
-    //private String topic;
     @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
 

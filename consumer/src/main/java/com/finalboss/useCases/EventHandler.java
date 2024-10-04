@@ -5,6 +5,7 @@ import com.finalboss.domain.MarketUpdate;
 import com.finalboss.domain.Operation;
 import com.finalboss.domain.YellowEvent;
 import com.finalboss.mapper.YellowEventMapper;
+import com.finalboss.port.EventPublisher;
 import com.finalboss.repository.YellowEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class EventHandler implements EventHandlerI {
+public class EventHandler implements Handler {
 
     private static final Logger log = LoggerFactory.getLogger(EventHandler.class);
     private final YellowEventRepository repo;
     private final YellowEventMapper yellowEventMapper;
-    private final EventPublisher eventPublisher;
+    private final EventPublisher eventPublisher; // TODO
 
 
     public EventHandler(YellowEventRepository repo, YellowEventMapper yellowEventMapper, EventPublisher eventPublisher) {
@@ -128,7 +129,7 @@ public class EventHandler implements EventHandlerI {
     public YellowEvent saveWithTryCatch(YellowEvent yellowEvent) {
         try {
             repo.save(yellowEvent);
-            return yellowEvent;
+            return yellowEvent; // TODO
         } catch (Exception e) {
             log.error("operation=addYellowEventToRepository, message='failed to save yellow event', yellowEvent='{}'", yellowEvent, e);
             return yellowEvent;

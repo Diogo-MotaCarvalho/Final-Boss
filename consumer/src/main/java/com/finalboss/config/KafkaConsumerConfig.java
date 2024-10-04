@@ -1,4 +1,4 @@
-package com.finalboss.service;
+package com.finalboss.config;
 
 import com.finalboss.domain.MarketUpdate;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

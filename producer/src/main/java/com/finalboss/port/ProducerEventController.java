@@ -1,4 +1,4 @@
-package com.finalboss.http;
+package com.finalboss.port;
 
 import com.finalboss.domain.MarketUpdate;
 import com.finalboss.useCases.Publisher;

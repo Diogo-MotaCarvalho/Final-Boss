@@ -1,4 +1,4 @@
-package com.finalboss.useCases;
+package com.finalboss.port;
 
 import com.finalboss.domain.YellowEvent;
 
