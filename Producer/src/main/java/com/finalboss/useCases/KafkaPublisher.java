@@ -12,11 +12,10 @@ public class KafkaPublisher implements Publisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class);
     private final KafkaTemplate<String, MarketUpdate> kafkaTemplate;
+    private final String topic;
 
-    @Value("${spring.kafka.producer.topic}")
-    private String topic;
-
-    public KafkaPublisher(KafkaTemplate<String, MarketUpdate> kafkaTemplate) {
+    public KafkaPublisher(@Value("${spring.kafka.producer.topic:demo}") String topic, KafkaTemplate<String, MarketUpdate> kafkaTemplate) {
+        this.topic = topic;
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -26,4 +25,5 @@ public class KafkaPublisher implements Publisher {
         kafkaTemplate.send(topic, message);
         log.info("operation=send, message='message sent', message='{}'", message);
     }
+
 }
