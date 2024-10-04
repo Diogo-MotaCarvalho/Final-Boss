@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 
@@ -27,9 +28,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class KafkaPublisherTest {
 
+    @Value("${spring.kafka.producer.topic}")
+    private String topic;
+
     Event event= new Event("3","Benfica vs Sporting","27/10/2023");
 
     List<Selection> selections = new ArrayList<>();
+
 
     MarketUpdate update= new MarketUpdate("2", "Match Odds", Operation.ADD, event,selections );
 
@@ -44,7 +49,7 @@ public class KafkaPublisherTest {
 
     @Test
     void testSendSuccess() {
-        when(kafkaTemplate.send("demo",update)).thenReturn(future);
+        when(kafkaTemplate.send(topic,update)).thenReturn(future);
         victim.publish(update);
         verify(kafkaTemplate).send(Mockito.anyString(),Mockito.any());
     }
