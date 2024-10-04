@@ -33,11 +33,8 @@ class ProducerEventControllerTest {
 
     @Test
     void publishTest(){
-
         victim.updateMarket(update);
         verify(publisher).publish(update);
-
-
     }
 
 }

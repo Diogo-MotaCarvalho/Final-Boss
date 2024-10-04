@@ -7,7 +7,7 @@ import java.util.List;
 
 @Document(collection = "market")
 public record Market(
-        @Id
+        @Id //TODO remove dependencies from domain
         String id,
         String name,
         List<Selection> selections) {

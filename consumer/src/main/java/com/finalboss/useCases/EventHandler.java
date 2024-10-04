@@ -21,13 +21,13 @@ public class EventHandler implements Handler {
     private static final Logger log = LoggerFactory.getLogger(EventHandler.class);
     private final YellowEventRepository repo;
     private final YellowEventMapper yellowEventMapper;
-    private final EventPublisher eventPublisher; // TODO
+    private final Publisher publisher; // TODO
 
 
     public EventHandler(YellowEventRepository repo, YellowEventMapper yellowEventMapper, EventPublisher eventPublisher) {
         this.repo = repo;
         this.yellowEventMapper = yellowEventMapper;
-        this.eventPublisher = eventPublisher;
+        this.publisher = eventPublisher;
     }
 
     @Override
@@ -40,11 +40,13 @@ public class EventHandler implements Handler {
     }
 
     /**
-     * //TODO Try to write a javadoc for every method that has considerable logic, so that others and even your future self,
-     * can more easily understand what this does
-     * @param update
+     * Adds a Market to a YellowEvent on the repository from a given MarketUpdate
+     * and publishes it to the designated kafka topic.
+     * If the YellowEvent does not exist a new one is created.
+     *
+     * @param update - must not be null.
+     * @throws IllegalArgumentException – in case the given update is null.
      */
-
     private void addYellowEventToRepository(MarketUpdate update) {
         log.info("operation=addYellowEventToRepository, message='trying to add event to repository', update='{}'", update);
         // Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
@@ -75,6 +77,13 @@ public class EventHandler implements Handler {
         }
     }
 
+    /**
+     * Modifies a Market and its Selections on a YellowEvent to the repository from a given MarketUpdate
+     * and publishes the Event to the designated kafka topic.
+     *
+     * @param update - must not be null.
+     * @throws IllegalArgumentException – in case the given update is null.
+     */
     private void modifyYellowEventInRepository(MarketUpdate update) {
         log.info("operation=modifyYellowEventInRepository, message='trying to modify an event's market', update='{}'", update);
         //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
@@ -105,8 +114,16 @@ public class EventHandler implements Handler {
         }
     }
 
+    /**
+     * Removes a Market from a YellowEvent to the repository from a given MarketUpdate
+     * and publishes it to the designated kafka topic.
+     *
+     * @param update - must not be null.
+     * @throws IllegalArgumentException – in case the given update is null.
+     */
     private void removeMarketFromEventInRepository(MarketUpdate update) {
         log.info("operation=removeMarketFromEventInRepository, message='trying to remove a market from an event', update='{}'", update);
+
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
         Optional<YellowEvent> event = repo.findById(yellowEventUpdate.id());
         //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
@@ -130,8 +147,7 @@ public class EventHandler implements Handler {
 
     public YellowEvent saveWithTryCatch(YellowEvent yellowEvent) {
         try {
-            repo.save(yellowEvent);
-            return yellowEvent; // TODO
+            return repo.save(yellowEvent);
         } catch (Exception e) {
             log.error("operation=addYellowEventToRepository, message='failed to save yellow event', yellowEvent='{}'", yellowEvent, e);
             return yellowEvent;
@@ -140,7 +156,7 @@ public class EventHandler implements Handler {
 
     public void publishWithLogs(YellowEvent yellowEvent) {
         log.info("operation=addYellowEventToRepository, message='trying to publish event', update='{}'", yellowEvent);
-        eventPublisher.publish(yellowEvent);
+        publisher.publish(yellowEvent);
         log.info("operation=addYellowEventToRepository, message='event successfully published', update='{}'", yellowEvent);
     }
 }

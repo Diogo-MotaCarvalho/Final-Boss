@@ -28,6 +28,4 @@ public class ProducerEventController {
         log.info("operation=updateMarket, message='everything worked', marketUpdate='{}'", marketUpdate);
     }
 
-
-
 }

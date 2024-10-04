@@ -8,8 +8,9 @@ import java.util.List;
 @Document(collection = "yellow-events")
 public record YellowEvent(
         @Id
-         String id,
-         String name,
-         String date,
-         List<Market> markets
-) {}
+        String id,
+        String name,
+        String date,
+        List<Market> markets
+) {
+}

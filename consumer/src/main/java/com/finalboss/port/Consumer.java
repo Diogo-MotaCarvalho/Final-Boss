@@ -21,9 +21,9 @@ public class Consumer {
     }
 
     @KafkaListener(topics = "${spring.kafka.consumer.topic}")
-    public void onMessage(@Payload List<MarketUpdate> message) {
+    public void onMessage(@Payload MarketUpdate message) {
         log.info("operation=onMessage, message='reading a message', message='{}'", message);
-        eventHandler.readOperation(message.getFirst());
+        eventHandler.readOperation(message);
         log.info("operation=onMessage, message='operation successful', message='{}'", message);
     }
 }
