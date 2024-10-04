@@ -1,2 +1,2 @@
-rootProject.name = "Final-Boss"
-include("Producer", "Consumer")
+rootProject.name = "final-boss"
+include("producer", "consumer")
