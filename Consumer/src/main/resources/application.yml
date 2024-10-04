@@ -13,3 +13,6 @@ spring:
       topic: "demo"
       bootstrap-servers: localhost:9092
       group-id: final-boss-consumer
+    producer:
+      bootstrap-servers: localhost:9092
+      topic: "events"

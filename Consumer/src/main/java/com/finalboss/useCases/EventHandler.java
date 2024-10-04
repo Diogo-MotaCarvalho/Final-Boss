@@ -57,14 +57,14 @@ public class EventHandler implements EventHandlerI {
             if (!hasMarket) {
                 event.get().markets().add(yellowEventUpdate.markets().getFirst());
                 log.info("operation=addYellowEventToRepository, message='trying to a new market to existing event', update='{}'", update);
-                repo.save(event.get());
+                saveWithTryCatch(event.get());
                 log.info("operation=addYellowEventToRepository, message='marked successfully added', update='{}'", update);
             }
         } else {
             // If the Event does not exist then it must be added with the market received.
-            log.info("operation=addYellowEventToRepository, message='trying to a new event', update='{}'", update);
+            log.info("operation=addYellowEventToRepository, message='trying to create a new event', update='{}'", update);
             saveWithTryCatch(yellowEventUpdate);
-            log.info("operation=addYellowEventToRepository, message='new event successfully added', update='{}'", update);
+            log.info("operation=addYellowEventToRepository, message='new event successfully created', update='{}'", update);
         }
     }
 
