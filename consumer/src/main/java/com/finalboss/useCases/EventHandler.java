@@ -54,6 +54,8 @@ public class EventHandler implements Handler {
 
             // If the Event exists then verify if it has a Market with the id received in the email.
             List<Market> markets = event.get().markets();
+
+            // TODO you can choose between using for loops or streams, either is fine
             boolean alreadyHasMarket = markets.stream().anyMatch(market -> update.id().equals(market.id()));
 
             //If not, add that market to the list of markets of that Event.
