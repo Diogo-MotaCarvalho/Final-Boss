@@ -1,0 +1,19 @@
+server:
+  port: 8082
+---
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      authentication-database: final-boss-db
+
+  kafka:
+    consumer:
+      topic: "demo"
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      group-id: final-boss-consumer
+
+---
