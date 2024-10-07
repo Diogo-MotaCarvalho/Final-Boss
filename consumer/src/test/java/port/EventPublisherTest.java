@@ -14,7 +14,7 @@ public class EventPublisherTest {
 
 
     @Mock
-    YellowEvent yellowEvent;;
+    YellowEvent yellowEvent;
 
     String topic = "demo";
 
