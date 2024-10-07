@@ -1,4 +1,4 @@
-package unitTests.publisher;
+package unitTests.port;
 
 import com.finalboss.domain.MarketUpdate;
 import com.finalboss.port.KafkaPublisher;
