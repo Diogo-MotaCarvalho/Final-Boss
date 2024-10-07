@@ -17,10 +17,12 @@ public class YellowEventMapper {
         log.info("operation=buildYellowEvent, message='building YellowEvent', update='{}'", update);
         if (update == null) throw new IllegalArgumentException("The update cannot be null");
 
-        return new YellowEvent(update.event().id(),
+        return new YellowEvent(
+                update.event().id(),
                 update.event().name(),
                 update.event().date(),
-                List.of(buildMarket(update))
+                List.of(buildMarket(update
+                ))
         );
     }
 
