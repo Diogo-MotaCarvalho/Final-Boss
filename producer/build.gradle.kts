@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("jacoco")
 }
 
 group = "org.example"
@@ -8,6 +9,8 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
+
+
 
 
 dependencies {
@@ -30,6 +33,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly ("org.projectlombok:lombok:1.18.34")
 
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
@@ -42,3 +46,20 @@ tasks.register("prepareKotlinBuildScriptModel"){}
 tasks.test {
     useJUnitPlatform()
 }
+tasks.jacocoTestReport {
+    // tests are required to run before generating the report
+    dependsOn(tasks.test)
+    // print the report url for easier access
+    doLast {
+        println("file://${project.rootDir}/build/reports/jacoco/test/html/index.html")
+    }
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("**/generated/**", "**/other-excluded/**", "**/domain/**","**/config/**","com.finalboss.FinalClassProducer")
+            }
+        })
+    )
+}
+
+

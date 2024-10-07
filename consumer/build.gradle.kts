@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("jacoco")
 }
 
 group = "org.example"
@@ -44,3 +45,20 @@ tasks.register("prepareKotlinBuildScriptModel"){}
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.jacocoTestReport {
+    // tests are required to run before generating the report
+    dependsOn(tasks.test)
+    // print the report url for easier access
+    doLast {
+        println("file://${project.rootDir}/build/reports/jacoco/test/html/index.html")
+    }
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("**/generated/**", "**/other-excluded/**", "**/domain/**","**/config/**","**/FinalClassConsumer")
+            }
+        })
+    )
+}
+
