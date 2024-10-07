@@ -11,6 +11,9 @@ Thumbs.db
 *.class
 target/
 *.log
+/*/gradlew
+/*/gradlew.bat
+/*/gradle
 
 # IDEs and Editors
 .vscode/
@@ -41,3 +44,7 @@ target/
 *.DS_Store
 *.iml
 /.gradle/
+/*/build/*
+/*/out/*
+
+
