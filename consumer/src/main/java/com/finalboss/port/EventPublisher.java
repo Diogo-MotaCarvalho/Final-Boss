@@ -16,12 +16,11 @@ public class EventPublisher implements Publisher {
 
     private static final Logger log = LoggerFactory.getLogger(EventPublisher.class);
     private final KafkaTemplate<String, YellowEvent> kafkaTemplate;
+    private final String topic;
 
-    @Value("${spring.kafka.producer.topic}")
-    private String topic;
-
-    public EventPublisher(KafkaTemplate<String, YellowEvent> kafkaTemplate) {
+    public EventPublisher(@Value("${spring.kafka.producer.topic:demo}") String topic, KafkaTemplate<String, YellowEvent> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
+        this.topic = topic;
     }
 
     @Override
