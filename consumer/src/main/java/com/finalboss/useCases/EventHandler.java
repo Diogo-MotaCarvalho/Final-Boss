@@ -47,7 +47,7 @@ public class EventHandler implements Handler {
      * @param update - must not be null.
      * @throws IllegalArgumentException – in case the given update is null.
      */
-    private void addYellowEventToRepository(MarketUpdate update) {
+    public void addYellowEventToRepository(MarketUpdate update) {
         log.info("operation=addYellowEventToRepository, message='trying to add event to repository', update='{}'", update);
         // Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
