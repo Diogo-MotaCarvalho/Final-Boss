@@ -69,7 +69,8 @@ public class EventHandler implements Handler {
             }
             //If not, add that market to the list of markets of that Event.
             if (!hasMarket) {
-                List<Market> newMarkets = new ArrayList<>(markets);
+                List<Market> newMarkets = new ArrayList<>(yellowEventUpdate.markets());
+                newMarkets.addAll(event.get().markets());
                 YellowEvent finalEvent = new YellowEvent(
                         event.get().id(),
                         event.get().name(),
@@ -166,7 +167,7 @@ public class EventHandler implements Handler {
         return null;
     }
 
-    public YellowEvent saveWithTryCatch(YellowEvent yellowEvent) {
+    private YellowEvent saveWithTryCatch(YellowEvent yellowEvent) {
         try {
             return repo.save(yellowEvent);
         } catch (Exception e) {
@@ -175,7 +176,7 @@ public class EventHandler implements Handler {
         }
     }
 
-    public void publishWithLogs(YellowEvent yellowEvent) {
+    private void publishWithLogs(YellowEvent yellowEvent) {
         log.info("operation=addYellowEventToRepository, message='trying to publish event', update='{}'", yellowEvent);
         publisher.publish(yellowEvent);
         log.info("operation=addYellowEventToRepository, message='event successfully published', update='{}'", yellowEvent);
