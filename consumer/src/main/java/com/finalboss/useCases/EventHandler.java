@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -47,26 +48,39 @@ public class EventHandler implements Handler {
      * @param update - must not be null.
      * @throws IllegalArgumentException – in case the given update is null.
      */
-    public void addYellowEventToRepository(MarketUpdate update) {
+    public YellowEvent addYellowEventToRepository(MarketUpdate update) {
         log.info("operation=addYellowEventToRepository, message='trying to add event to repository', update='{}'", update);
         // Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
         Optional<YellowEvent> event = repo.findById(yellowEventUpdate.id());
         if (event.isPresent()) {
-
             // If the Event exists then verify if it has a Market with the id received in the email.
             List<Market> markets = event.get().markets();
 
-            // TODO you can choose between using for loops or streams, either is fine
-            boolean alreadyHasMarket = markets.stream().anyMatch(market -> update.id().equals(market.id()));
-
+            // TODO learn streams (check example on commit "TODO"
+            boolean hasMarket = false;
+            for (Market market : markets) {
+                //If already exists then you can ignore that email.
+                if (market.id().equals(update.id())) {
+                    hasMarket = true;
+                    log.info("operation=addYellowEventToRepository, message='market already exists in event', update='{}'", update);
+                    break;
+                }
+            }
             //If not, add that market to the list of markets of that Event.
-            if (!alreadyHasMarket) {
-                markets.add(yellowEventUpdate.markets().getFirst());
+            if (!hasMarket) {
+                List<Market> newMarkets = new ArrayList<>(markets);
+                YellowEvent finalEvent = new YellowEvent(
+                        event.get().id(),
+                        event.get().name(),
+                        event.get().date(),
+                        newMarkets
+                );
                 log.info("operation=addYellowEventToRepository, message='trying to a new market to existing event', update='{}'", update);
-                saveWithTryCatch(event.get());
+                saveWithTryCatch(finalEvent);
                 log.info("operation=addYellowEventToRepository, message='marked successfully added', update='{}'", update);
-                publishWithLogs(event.get());
+                publishWithLogs(finalEvent);
+                return finalEvent;
             }
         } else {
             // If the Event does not exist then it must be added with the market received.
@@ -74,7 +88,9 @@ public class EventHandler implements Handler {
             saveWithTryCatch(yellowEventUpdate);
             log.info("operation=addYellowEventToRepository, message='new event successfully created', update='{}'", update);
             publishWithLogs(yellowEventUpdate);
+            return yellowEventUpdate;
         }
+        return null;
     }
 
     /**
@@ -84,7 +100,7 @@ public class EventHandler implements Handler {
      * @param update - must not be null.
      * @throws IllegalArgumentException – in case the given update is null.
      */
-    private void modifyYellowEventInRepository(MarketUpdate update) {
+    private YellowEvent modifyYellowEventInRepository(MarketUpdate update) {
         log.info("operation=modifyYellowEventInRepository, message='trying to modify an event's market', update='{}'", update);
         //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
@@ -106,12 +122,14 @@ public class EventHandler implements Handler {
                     ));
                     log.info("operation=modifyYellowEventInRepository, message='market successfully modified', update='{}'", update);
                     publishWithLogs(eventToPublish);
+                    return eventToPublish;
                 }
             }
         } else {
             log.info("operation=modifyYellowEventInRepository, message='event does not exist', update='{}'", update);
             //If it doesn't exist you can ignore that email.
         }
+        return null;
     }
 
     /**
@@ -121,11 +139,12 @@ public class EventHandler implements Handler {
      * @param update - must not be null.
      * @throws IllegalArgumentException – in case the given update is null.
      */
-    private void removeMarketFromEventInRepository(MarketUpdate update) {
+    private YellowEvent removeMarketFromEventInRepository(MarketUpdate update) {
         log.info("operation=removeMarketFromEventInRepository, message='trying to remove a market from an event', update='{}'", update);
 
         YellowEvent yellowEventUpdate = yellowEventMapper.buildYellowEvent(update);
         Optional<YellowEvent> event = repo.findById(yellowEventUpdate.id());
+        YellowEvent finalEvent;
         //Check the Yellow Events to verify if an Event with the ID received in event.id already exists.
         if (event.isPresent()) {
             //If it exists then verify if it has a Market with the id received in the email.
@@ -138,11 +157,13 @@ public class EventHandler implements Handler {
                     saveWithTryCatch(event.get());
                     log.info("operation=removeMarketFromEventInRepository, message='successfully removed a market', update='{}'", update);
                     publishWithLogs(event.get());
+                    return event.get();
                 }
             }
         } else {
             log.info("operation=removeMarketFromEventInRepository, message='event does not exist', update='{}'", update);
         }
+        return null;
     }
 
     public YellowEvent saveWithTryCatch(YellowEvent yellowEvent) {
