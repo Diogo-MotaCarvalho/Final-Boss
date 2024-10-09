@@ -24,10 +24,11 @@ public class EventPublisher implements Publisher {
     }
 
     @Override
-    public void publish(YellowEvent message) {
+    public YellowEvent publish(YellowEvent message) {
         log.info("operation=send, message='publishing event', message='{}'", message);
         kafkaTemplate.send(topic, message); // TODO can we do something with the return of this method? Not a priority but a nice to have.
         log.info("operation=send, message='event published', message='{}'", message);
+        return message;
     }
 }
 
