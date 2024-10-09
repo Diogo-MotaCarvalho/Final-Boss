@@ -56,7 +56,6 @@ public class EventHandler implements Handler {
         if (event.isPresent()) {
             // If the Event exists then verify if it has a Market with the id received in the email.
             List<Market> markets = event.get().markets();
-
             // TODO learn streams (check example on commit "TODO"
             boolean hasMarket = false;
             for (Market market : markets) {
@@ -113,13 +112,12 @@ public class EventHandler implements Handler {
                 log.info("operation=modifyYellowEventInRepository, message='trying to modify a market', update='{}'", update);
                 //If it already exists then you should update its name and selections with the ones received in the email.
                 if (market.id().equals(update.id())) {
-                    markets.remove(market);
-                    markets.add(yellowEventUpdate.markets().getFirst());
+                    List<Market> newMarkets = new ArrayList<>(yellowEventUpdate.markets());
                     YellowEvent eventToPublish = saveWithTryCatch(new YellowEvent(
                             event.get().id(),
                             yellowEventUpdate.name(),
                             event.get().date(),
-                            markets
+                            newMarkets
                     ));
                     log.info("operation=modifyYellowEventInRepository, message='market successfully modified', update='{}'", update);
                     publishWithLogs(eventToPublish);
@@ -128,8 +126,10 @@ public class EventHandler implements Handler {
             }
         } else {
             log.info("operation=modifyYellowEventInRepository, message='event does not exist', update='{}'", update);
+            return null;
             //If it doesn't exist you can ignore that email.
         }
+        log.info("operation=modifyYellowEventInRepository, message='market does not exist in event', update='{}'", update);
         return null;
     }
 
@@ -154,10 +154,16 @@ public class EventHandler implements Handler {
                 log.info("operation=removeMarketFromEventInRepository, message='trying to remove a market', update='{}'", update);
                 //If it exists then you should remove the Market from that Event.
                 if (market.id().equals(update.id())) {
-                    markets.remove(market);
-                    saveWithTryCatch(event.get());
+                    ArrayList<Market> newMarkets = new ArrayList<>(yellowEventUpdate.markets());
+                    newMarkets.remove(market);
+                    YellowEvent eventToPublish = saveWithTryCatch(new YellowEvent(
+                            event.get().id(),
+                            event.get().name(),
+                            event.get().date(),
+                            newMarkets
+                    ));
                     log.info("operation=removeMarketFromEventInRepository, message='successfully removed a market', update='{}'", update);
-                    publishWithLogs(event.get());
+                    publishWithLogs(eventToPublish);
                     return event.get();
                 }
             }
@@ -172,7 +178,7 @@ public class EventHandler implements Handler {
             return repo.save(yellowEvent);
         } catch (Exception e) {
             log.error("operation=addYellowEventToRepository, message='failed to save yellow event', yellowEvent='{}'", yellowEvent, e);
-            return yellowEvent;
+            throw  e;
         }
     }
 
