@@ -12,5 +12,5 @@ public record YellowEvent(
         String name,
         String date,
         List<Market> markets
-) {
+){
 }

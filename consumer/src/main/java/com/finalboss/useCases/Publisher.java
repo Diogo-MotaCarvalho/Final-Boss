@@ -3,5 +3,5 @@ package com.finalboss.useCases;
 import com.finalboss.domain.YellowEvent;
 
 public interface Publisher {
-    void publish(YellowEvent message);
+    YellowEvent publish(YellowEvent message);
 }
