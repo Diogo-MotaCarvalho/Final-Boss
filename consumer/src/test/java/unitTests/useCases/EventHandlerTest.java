@@ -1,4 +1,4 @@
-package useCases;
+package unitTests.useCases;
 
 import com.finalboss.domain.*;
 import com.finalboss.mapper.YellowEventMapper;
@@ -31,6 +31,11 @@ public class EventHandlerTest {
     @InjectMocks
     EventHandler victim;
 
+    public static Object[][] dataProvider() {
+        return new Object[][]{
+                {}
+        };
+    }
 
     @BeforeEach
     void setUp() {
@@ -38,13 +43,14 @@ public class EventHandlerTest {
         victim = new EventHandler(repoMock, mapperMock, publisherMock);
     }
 
+    //Testype1
     @Test
     void existingEventAndMarketAddTest() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.ADD);
         YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
 
         when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.ofNullable(yellowEvent));
+        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEvent));
 
         victim.readOperation(marketUpdate);
 
@@ -61,7 +67,7 @@ public class EventHandlerTest {
         YellowEvent yellowEvent = buildYellowEventWithNullMarket(marketUpdate);
 
         when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.ofNullable(yellowEvent));
+        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEvent));
 
         assertThrows(NullPointerException.class, () -> victim.readOperation(marketUpdate));
     }
@@ -121,6 +127,7 @@ public class EventHandlerTest {
         verifyNoMoreInteractions(publisherMock);
     }
 
+    //Testype1
     @Test
     void notExistingEventModifyTest() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.MODIFY);
@@ -132,12 +139,13 @@ public class EventHandlerTest {
         victim.readOperation(marketUpdate);
 
         verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(mapperMock);
         verify(repoMock).findById(yellowEvent.id());
+        verifyNoMoreInteractions(mapperMock);
         verifyNoMoreInteractions(repoMock);
         verifyNoInteractions(publisherMock);
     }
 
+    //Testype1
     @Test
     void existingEventButNoMarketModifyTest() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.MODIFY);
@@ -149,8 +157,8 @@ public class EventHandlerTest {
         victim.readOperation(marketUpdate);
 
         verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(mapperMock);
         verify(repoMock).findById(yellowEvent.id());
+        verifyNoMoreInteractions(mapperMock);
         verifyNoMoreInteractions(repoMock);
         verifyNoInteractions(publisherMock);
     }
@@ -168,8 +176,8 @@ public class EventHandlerTest {
         victim.readOperation(marketUpdate);
 
         verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(mapperMock);
         verify(repoMock).findById(yellowEvent.id());
+        verifyNoMoreInteractions(mapperMock);
         verifyNoMoreInteractions(repoMock);
         verifyNoInteractions(publisherMock);
     }
@@ -222,6 +230,7 @@ public class EventHandlerTest {
 
     }
 
+    //Testype1
     @Test
     void existingEventButNotMarketRemoveTest() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.DELETE);
@@ -234,12 +243,13 @@ public class EventHandlerTest {
         victim.readOperation(marketUpdate);
 
         verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(mapperMock);
         verify(repoMock).findById(yellowEvent.id());
+        verifyNoMoreInteractions(mapperMock);
         verifyNoMoreInteractions(repoMock);
         verifyNoInteractions(publisherMock);
     }
 
+    //Type1
     @Test
     void notExistentEventRemoveTest() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.DELETE);
@@ -270,12 +280,24 @@ public class EventHandlerTest {
         assertThrows(RuntimeException.class, () -> victim.readOperation(marketUpdate));
     }
 
+    private MarketUpdate choseMarketMethod(int option, Operation operation) {
+        return switch (option) {
+            case 0 -> buildMarketUpdate(operation);
+            case 1 -> buildMarketUpdateWithNewMarket(operation);
+            default -> null;
+        };
+    }
 
-//    public static Object[][] dataProvider(){
-//        return new Object[][]{
-//                {}
-//        }
-//    }
+    private YellowEvent choseYellowEventMethod(int option, MarketUpdate marketUpdate) {
+        return switch (option) {
+            case 0 -> buildYellowEvent(marketUpdate);
+            case 1 -> buildYellowEventWithNullMarket(marketUpdate);
+            case 2 -> buildYellowEventWithEmptyMarket(marketUpdate);
+            case 3 -> buildEventWithModifiedMarket(marketUpdate);
+            case 4 -> buildEventWithDifferentMarket(marketUpdate);
+            default -> null;
+        };
+    }
 
     private MarketUpdate buildMarketUpdate(Operation operation) {
         List<Selection> selectionList = new ArrayList<>();
@@ -437,5 +459,6 @@ public class EventHandlerTest {
                 )
         );
     }
+
 
 }

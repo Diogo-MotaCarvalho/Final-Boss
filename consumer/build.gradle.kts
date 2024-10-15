@@ -32,10 +32,20 @@ dependencies {
     implementation ("org.springframework.data:spring-data-mongodb:4.3.4")
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.3.4")
+    // https://mvnrepository.com/artifact/com.tngtech.junit.dataprovider/junit-jupiter-dataprovider
+    implementation ("com.tngtech.junit.dataprovider:junit-jupiter-dataprovider:2.10")
+    testImplementation("org.junit.platform:junit-platform-suite")
+
 
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.platform:junit-platform-suite:latest.release")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
+    testImplementation("io.cucumber:cucumber-java:7.20.1")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.20.1")
+    testImplementation ("org.junit.vintage:junit-vintage-engine:5.7.2")
+
 }
 tasks.register<Wrapper>("wrapper") {
     gradleVersion = "8.8"
@@ -61,4 +71,5 @@ tasks.jacocoTestReport {
         })
     )
 }
+
 

@@ -1,4 +1,4 @@
-package mapper;
+package unitTests.mapper;
 
 import com.finalboss.domain.*;
 import com.finalboss.mapper.YellowEventMapper;

@@ -1,4 +1,4 @@
-package port;
+package unitTests.port;
 
 import com.finalboss.domain.YellowEvent;
 import com.finalboss.port.EventPublisher;

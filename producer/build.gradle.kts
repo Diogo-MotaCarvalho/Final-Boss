@@ -29,6 +29,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testImplementation ("org.springframework.boot:spring-boot-starter-test:3.3.4")
+    // https://mvnrepository.com/artifact/io.cucumber/cucumber-java
+    implementation ("io.cucumber:cucumber-java:2.0.0")
+
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly ("org.projectlombok:lombok:1.18.34")

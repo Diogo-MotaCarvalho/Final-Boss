@@ -1,40 +1,336 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b67c518e-2c04-44f5-ab05-7d25f71fa921" name="Changes" comment="" />
+    <list default="true" id="b67c518e-2c04-44f5-ab05-7d25f71fa921" name="Changes" comment="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic">
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/TestRunner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/steps/MarketUpdateAddSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/ConsumerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/resources/features/MarketUpdateAdd.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/resources/marketUpdate.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/mapper/YellowEventMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/mapper/YellowEventMapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/port/ConsumerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/port/ConsumerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/port/EventPublisherTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/port/EventPublisherTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/useCases/EventHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/useCases/EventHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/producer/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/producer/build.gradle.kts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/consumer">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/producer">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+                <item name="consumer" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+                <item name="consumer" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+                <item name="consumer" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-boss" type="f1a62948:ProjectNode" />
+                <item name="consumer" type="2d1252cf:ModuleNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Diogo-MotaCarvalho&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Diogo-MotaCarvalho/Final-Boss.git&quot;,
+    &quot;accountId&quot;: &quot;92bf3d96-faa0-4163-9dde-7a7ccb31ba4a&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2mFHpumQQAD5TveSBIIJt70KKqd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker.kafka: Compose Deployment.executor": "Run",
+    "Docker.docker.mongo-express: Compose Deployment.executor": "Run",
+    "Docker.docker.mongo: Compose Deployment.executor": "Run",
+    "Docker.docker.zookeeper: Compose Deployment.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.Build Final Boss.executor": "Run",
+    "Gradle.ConsumerTest.consumerTest.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.EventHandlerTest.addYellowEventTest.executor": "Run",
+    "Gradle.EventHandlerTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.existingEventAndMarketAddTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.existingEventAndMarketModifyTest.executor": "Run",
+    "Gradle.EventHandlerTest.existingEventAndMarketRemoveTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.existingEventBuMarketNotInRepoModifyTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.existingEventButNoMarketAddTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.existingEventButNoMarketModifyTest.executor": "Run",
+    "Gradle.EventHandlerTest.existingEventButNotMarketAddTest.executor": "Run",
+    "Gradle.EventHandlerTest.existingEventButNotMarketRemoveTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.existingEventButNullMarketAddTest.executor": "Run",
+    "Gradle.EventHandlerTest.existingEventButNullMarketRemoveTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.newEventWithNewMarketAddTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.notExistingEventModifyTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.notExistingEventWithNewMarketAddTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.notexistingEventRemoveTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.readOperationAddTest.executor": "Coverage",
+    "Gradle.EventHandlerTest.readOperationDeleteTest.executor": "Run",
+    "Gradle.EventHandlerTest.readOperationModifyTest.executor": "Run",
+    "Gradle.EventHandlerTest.readOperationTest.executor": "Run",
+    "Gradle.EventHandlerTest.saveWithTryCatchThrowsTest.executor": "Run",
+    "Gradle.EventPublisherTest.testPublish.executor": "Run",
+    "Gradle.Final Boss [assemble].executor": "Run",
+    "Gradle.Final Boss [build].executor": "Run",
+    "Gradle.Final Boss [clean].executor": "Run",
+    "Gradle.Final Boss [jacocoTestCoverageVerification].executor": "Run",
+    "Gradle.Final Boss [jacocoTestReport].executor": "Run",
+    "Gradle.Final Boss [test].executor": "Run",
+    "Gradle.Final Boss:consumer [:consumer:cucumber.api.cli.Main.main()].executor": "Run",
+    "Gradle.Final Boss:consumer [:consumer:io.cucumber.core.cli.Main.main()].executor": "Run",
+    "Gradle.Final Boss:consumer [assemble].executor": "Run",
+    "Gradle.Final Boss:consumer [buildDependents].executor": "Run",
+    "Gradle.Final Boss:consumer [build].executor": "Run",
+    "Gradle.Final Boss:consumer [check].executor": "Run",
+    "Gradle.Final Boss:consumer [clean].executor": "Run",
+    "Gradle.Final Boss:consumer [jacocoTestCoverageVerification].executor": "Run",
+    "Gradle.Final Boss:consumer [jacocoTestReport].executor": "Run",
+    "Gradle.Final Boss:consumer [test].executor": "Run",
+    "Gradle.Final Boss:producer [build].executor": "Run",
+    "Gradle.Final Boss:producer [jacocoTestReport].executor": "Run",
+    "Gradle.KafkaPublisherTest.testSendSuccess.executor": "Run",
+    "Gradle.MarketUpdateAddSteps.executor": "Run",
+    "Gradle.TestRunner.executor": "Run",
+    "Gradle.YellowEventMapperTest.buildMarketNullArgTest.executor": "Run",
+    "Gradle.YellowEventMapperTest.buildMarketNullParamTest.executor": "Run",
+    "Gradle.YellowEventMapperTest.buildMarketTest.executor": "Run",
+    "Gradle.YellowEventMapperTest.buildYellowEventTest.executor": "Run",
+    "Gradle.YellowEventMapperTest.buildYellowEventsArgParamTest.executor": "Run",
+    "HTTP Request.generated-requests | #1.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.FinalClassConsumer.executor": "Run",
+    "Spring Boot.FinalClassProducer.executor": "Run",
+    "git-widget-placeholder": "tests",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/diogo.carvalho/IdeaProjects/Final Boss/consumer/src/test/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/diogo.carvalho/IdeaProjects/Final Boss/src/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <setting name="path" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workDir" value="file://$PROJECT_DIR$" />
-      <setting name="debug" value="false" />
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/consumer/src/test/resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/consumer/src/test/java/cucumber/features" />
+      <recent name="$PROJECT_DIR$/consumer/src/test/java/cucumber" />
+      <recent name="$PROJECT_DIR$/consumer/src/test/java" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.TestRunner">
+    <configuration name="TestRunner" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":consumer:test" />
+            <option value="--tests" />
+            <option value="&quot;cucumber.TestRunner&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="FinalClassConsumer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="final-boss.consumer.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.finalboss.FinalClassConsumer" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FinalClassProducer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="final-boss.producer.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.finalboss.FinalClassProducer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
+    </configuration>
+    <configuration name="docker.kafka: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="kafka" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker.mongo-express: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mongo-express" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker.mongo: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mongo" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.docker.kafka: Compose Deployment" />
+      <item itemvalue="Docker.docker.mongo-express: Compose Deployment" />
+      <item itemvalue="Docker.docker.mongo: Compose Deployment" />
+      <item itemvalue="Gradle.TestRunner" />
+      <item itemvalue="HTTP Request.generated-requests | #1" />
+      <item itemvalue="Spring Boot.FinalClassConsumer" />
+      <item itemvalue="Spring Boot.FinalClassProducer" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.TestRunner" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
+        <item itemvalue="Docker.docker.mongo-express: Compose Deployment" />
+        <item itemvalue="Docker.docker.mongo: Compose Deployment" />
+        <item itemvalue="Docker.docker.kafka: Compose Deployment" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -53,11 +349,130 @@
       <option name="presentableId" value="Default" />
       <updated>1726665590158</updated>
       <workItem from="1726665591589" duration="140000" />
+      <workItem from="1728313400857" duration="42100000" />
+      <workItem from="1728465448508" duration="14890000" />
+      <workItem from="1728549519454" duration="21609000" />
+      <workItem from="1728896201154" duration="16660000" />
+      <workItem from="1729006777071" duration="2455000" />
     </task>
+    <task id="LOCAL-00001" summary="Created Test classes and implemented Unite test for Consumer">
+      <option name="closed" value="true" />
+      <created>1728314959194</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728314959194</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fixed warnings">
+      <option name="closed" value="true" />
+      <created>1728314999168</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728314999168</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed EventPublisher Tests.">
+      <option name="closed" value="true" />
+      <created>1728318681507</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728318681507</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implemented Consumer Tests">
+      <option name="closed" value="true" />
+      <created>1728319016708</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728319016708</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Implemented YellowEventMapper Tests">
+      <option name="closed" value="true" />
+      <created>1728323292555</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1728323292555</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Started Implementing EventHandler Tests">
+      <option name="closed" value="true" />
+      <created>1728324950210</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1728324950210</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixed logic in addYellowEventToRepository method">
+      <option name="closed" value="true" />
+      <created>1728401564782</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1728401564782</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed logic in addYellowEventToRepository method">
+      <option name="closed" value="true" />
+      <created>1728406268057</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1728406268057</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Made method publish return a YellowEvent">
+      <option name="closed" value="true" />
+      <created>1728464056630</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1728464056630</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added tests at EventHandlerTest.&#10;Some refactoring.">
+      <option name="closed" value="true" />
+      <created>1728466791761</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1728466791761</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic">
+      <option name="closed" value="true" />
+      <created>1728482912205</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1728482912205</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="merge" />
+    <MESSAGE value="Created Test classes and implemented Unite test for Consumer" />
+    <MESSAGE value="fixed warnings" />
+    <MESSAGE value="Fixed EventPublisher Tests." />
+    <MESSAGE value="Implemented Consumer Tests" />
+    <MESSAGE value="Implemented YellowEventMapper Tests" />
+    <MESSAGE value="Started Implementing EventHandler Tests" />
+    <MESSAGE value="Fixed logic in addYellowEventToRepository method" />
+    <MESSAGE value="Made method publish return a YellowEvent" />
+    <MESSAGE value="Added tests at EventHandlerTest.&#10;Some refactoring." />
+    <MESSAGE value="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -69,5 +484,23 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventButNullMarketAddTest.ic" NAME="EventHandlerTest.existingEventButNullMarketAddTest Coverage Results" MODIFIED="1728466015751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventButNullMarketRemoveTest.ic" NAME="EventHandlerTest.existingEventButNullMarketRemoveTest Coverage Results" MODIFIED="1728480700020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_notExistingEventWithNewMarketAddTest.ic" NAME="EventHandlerTest.notExistingEventWithNewMarketAddTest Coverage Results" MODIFIED="1728481904326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventAndMarketModifyTest.ic" NAME="EventHandlerTest.existingEventAndMarketModifyTest Coverage Results" MODIFIED="1728471267980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_saveWithTryCatchThrowsTest.ic" NAME="EventHandlerTest.saveWithTryCatchThrowsTest Coverage Results" MODIFIED="1728482703610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest.ic" NAME="EventHandlerTest Coverage Results" MODIFIED="1728482810346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventAndMarketRemoveTest.ic" NAME="EventHandlerTest.existingEventAndMarketRemoveTest Coverage Results" MODIFIED="1728480212759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventButNoMarketAddTest.ic" NAME="EventHandlerTest.existingEventButNoMarketAddTest Coverage Results" MODIFIED="1728481822206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_notExistingEventModifyTest.ic" NAME="EventHandlerTest.notExistingEventModifyTest Coverage Results" MODIFIED="1728467180782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventAndMarketAddTest.ic" NAME="EventHandlerTest.existingEventAndMarketAddTest Coverage Results" MODIFIED="1728481429383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventBuMarketNotInRepoModifyTest.ic" NAME="EventHandlerTest.existingEventBuMarketNotInRepoModifyTest Coverage Results" MODIFIED="1728478092352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_readOperationAddTest.ic" NAME="EventHandlerTest.readOperationAddTest Coverage Results" MODIFIED="1728397260093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventButNotMarketRemoveTest.ic" NAME="EventHandlerTest.existingEventButNotMarketRemoveTest Coverage Results" MODIFIED="1728480396289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_notexistingEventRemoveTest.ic" NAME="EventHandlerTest.notexistingEventRemoveTest Coverage Results" MODIFIED="1728480849352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_newEventWithNewMarketAddTest.ic" NAME="EventHandlerTest.newEventWithNewMarketAddTest Coverage Results" MODIFIED="1728466699061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/final_boss$EventHandlerTest_existingEventButNoMarketModifyTest.ic" NAME="EventHandlerTest.existingEventButNoMarketModifyTest Coverage Results" MODIFIED="1728476973385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
