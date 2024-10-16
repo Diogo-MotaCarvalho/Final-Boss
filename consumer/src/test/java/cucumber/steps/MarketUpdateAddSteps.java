@@ -2,14 +2,19 @@ package cucumber.steps;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finalboss.domain.MarketUpdate;
+import com.finalboss.domain.YellowEvent;
+import com.finalboss.mapper.YellowEventMapper;
 import cucumber.utils.CucumberUtils;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class MarketUpdateAddSteps {
@@ -24,20 +29,40 @@ public class MarketUpdateAddSteps {
 
     @Then("^MarketUpdate is published at \"([^\"]*)\" topic$")
     public void marketupdateIsPublishedAtTopic(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Market update is Published");
-        throw new PendingException();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(new File("src/test/resources/marketUpdate.json"));
+        String bootstrapServers = "localhost:9092";
+        String topic = "demo";
+        Map<String, String> records = CucumberUtils.consumeData(bootstrapServers, topic, "final-boss-consumer");
+
+        assertThat(records.containsValue(jsonNode.toString())).isTrue();
     }
 
     @And("^YellowEvent is published at \"([^\"]*)\" topic$")
     public void yelloweventIsPublishedAtTopic(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Yellow Event isPublished");
-        throw new PendingException();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(new File("src/test/resources/marketUpdate.json"));
+        MarketUpdate marketUpdate = objectMapper.treeToValue(jsonNode, MarketUpdate.class);
+        YellowEventMapper yellowEventMapper = new YellowEventMapper();
+        YellowEvent event = yellowEventMapper.buildYellowEvent(marketUpdate);
+
+        String bootstrapServers = "localhost:9092";
+        String topic = "events";
+
+        Map<String, String> records = CucumberUtils.consumeData(bootstrapServers, topic, "final-boss-producer");
+
+        assertThat(records.containsValue(objectMapper.writeValueAsString(event))).isTrue();
+
     }
 
     @And("^YellowEvent is created in db$")
-    public void yelloweventIsCreatedInDb() {
-        System.out.println("Yellow Event is created in db");
+    public void yelloweventIsCreatedInDb() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode expectedJsonNode = objectMapper.readTree(new File("src/test/resources/yellowEvent.json"));
+
+        String actual = CucumberUtils.getEventFromDB("2578936").toJson().replace(": ",":").replace(", ",",");
+
+       assertThat(actual).isEqualTo(objectMapper.writeValueAsString(expectedJsonNode));
     }
 }

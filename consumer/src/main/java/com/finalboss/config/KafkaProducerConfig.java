@@ -1,6 +1,7 @@
 package com.finalboss.config;
 
 import com.finalboss.domain.YellowEvent;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,8 @@ public class KafkaProducerConfig {
 
     @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
+    @Value("${spring.kafka.producer.group-id}")
+    private String groupId;
 
     @Bean
     public JsonSerializer<YellowEvent> jsonSerializer() {
@@ -37,6 +40,7 @@ public class KafkaProducerConfig {
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 JsonSerializer.class);
         configProps.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG,groupId);
         return new DefaultKafkaProducerFactory<>(configProps, new StringSerializer(), jsonSerializer);
     }
 

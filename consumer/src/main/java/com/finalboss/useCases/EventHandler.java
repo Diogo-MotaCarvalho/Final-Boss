@@ -22,7 +22,7 @@ public class EventHandler implements Handler {
     private static final Logger log = LoggerFactory.getLogger(EventHandler.class);
     private final YellowEventRepository repo;
     private final YellowEventMapper yellowEventMapper;
-    private final Publisher publisher; // TODO
+    private final Publisher publisher;
 
 
     public EventHandler(YellowEventRepository repo, YellowEventMapper yellowEventMapper, EventPublisher eventPublisher) {

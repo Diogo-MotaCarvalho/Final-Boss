@@ -1,0 +1,29 @@
+{
+  "_id":"2578936",
+  "name":"Benfica vs Barcelona",
+  "date":"27/10/2023",
+  "markets":[
+    {
+      "_id":"1334",
+      "name":"Match Odds",
+      "selections":[
+        {
+          "_id":149,
+          "name":"Benfica",
+          "odd":1.1299999952316284
+        },
+        {
+          "_id":318,
+          "name":"Barcelona",
+          "odd":1.100000023841858
+        },
+        {
+          "_id":871,
+          "name":"Draw",
+          "odd":1.3899999856948853
+        }
+      ]
+    }
+  ],
+  "_class":"com.finalboss.domain.YellowEvent"
+}
