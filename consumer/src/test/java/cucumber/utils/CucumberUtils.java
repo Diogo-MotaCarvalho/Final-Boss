@@ -60,32 +60,35 @@ public class CucumberUtils {
 
     }
 
-    public static Map<String, String> consumeData(String bootstrapServers, String topic, String setGroup) {
+    public static Map<String, String> consumeData(String bootstrapServers, String topic, String setGroup,String clientID) {
 
         Properties properties = new Properties();
 
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, setGroup);
+        properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG, clientID);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(List.of(topic));
 
         long startTime = System.currentTimeMillis();
-        long durationMillis = 60000;
+        long durationMillis = 5000;
+
         Map<String, String> returnRecords = new HashMap<>();
 
         while (System.currentTimeMillis() - startTime < durationMillis) {
             ConsumerRecords<String, String> records =
                     consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String, String> record : records) {
-                log.info("Key: " + record.key() + ", Value: " + record.value());
-                log.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+                log.info("Key: {}, Value: {}", record.key(), record.value());
+                log.info("Partition: {}, Offset:{}", record.partition(), record.offset());
                 returnRecords.put(record.key(), record.value());
             }
         }
-
+        consumer.close();
         return returnRecords;
     }
 
@@ -106,7 +109,6 @@ public class CucumberUtils {
             try {
                 // Send a ping to confirm a successful connection
                 Bson command = new BsonDocument("ping", new BsonInt64(1));
-                Document commandResult = database.runCommand(command);
                 System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
 
                 MongoCollection<Document> collection = database.getCollection("yellow-events");
@@ -118,6 +120,13 @@ public class CucumberUtils {
         }
 
         return null;
+    }
+
+    public static void clearCollection() {
+        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017/local");
+        MongoDatabase database = mongoClient.getDatabase("local");
+        MongoCollection<Document> collection = database.getCollection("yellow-events");
+        collection.drop();
     }
 
 }

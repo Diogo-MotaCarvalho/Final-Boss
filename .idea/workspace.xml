@@ -4,20 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b67c518e-2c04-44f5-ab05-7d25f71fa921" name="Changes" comment="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic">
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/TestRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/steps/MarketUpdateAddSteps.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/ConsumerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/resources/features/MarketUpdateAdd.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/resources/marketUpdate.json" afterDir="false" />
+    <list default="true" id="b67c518e-2c04-44f5-ab05-7d25f71fa921" name="Changes" comment="Component test added.">
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/resources/eventAtTopicExpected.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/mapper/YellowEventMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/mapper/YellowEventMapperTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/port/ConsumerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/port/ConsumerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/port/EventPublisherTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/port/EventPublisherTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/useCases/EventHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/useCases/EventHandlerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/producer/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/producer/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/config/KafkaProducerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/cucumber/steps/MarketUpdateAddSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/steps/MarketUpdateAddSteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/resources/marketUpdate.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/resources/marketUpdate.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/test/resources/yellowEvent.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/resources/yellowEvent.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +199,7 @@
     "Spring Boot.FinalClassProducer.executor": "Run",
     "git-widget-placeholder": "tests",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/diogo.carvalho/IdeaProjects/Final Boss/consumer/src/test/resources",
+    "last_opened_file_path": "/Users/diogo.carvalho/IdeaProjects/Final Boss/consumer/src/test/java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -220,6 +215,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/consumer/src/test/java" />
       <recent name="$PROJECT_DIR$/consumer/src/test/resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -227,8 +223,55 @@
       <recent name="$PROJECT_DIR$/consumer/src/test/java/cucumber" />
       <recent name="$PROJECT_DIR$/consumer/src/test/java" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cucumber.utils" />
+    </key>
   </component>
   <component name="RunManager" selected="Gradle.TestRunner">
+    <configuration name="Final Boss [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Final Boss [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="TestRunner" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -274,19 +317,6 @@
       <deployment type="docker-compose.yml" />
       <method v="2" />
     </configuration>
-    <configuration name="docker.kafka: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="kafka" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration name="docker.mongo-express: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -300,23 +330,10 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker.mongo: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="mongo" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Docker.docker.kafka: Compose Deployment" />
       <item itemvalue="Docker.docker.mongo-express: Compose Deployment" />
-      <item itemvalue="Docker.docker.mongo: Compose Deployment" />
+      <item itemvalue="Gradle.Final Boss [clean]" />
+      <item itemvalue="Gradle.Final Boss [build]" />
       <item itemvalue="Gradle.TestRunner" />
       <item itemvalue="HTTP Request.generated-requests | #1" />
       <item itemvalue="Spring Boot.FinalClassConsumer" />
@@ -325,10 +342,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.TestRunner" />
+        <item itemvalue="Gradle.Final Boss [build]" />
+        <item itemvalue="Gradle.Final Boss [clean]" />
         <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="Docker.docker.mongo-express: Compose Deployment" />
-        <item itemvalue="Docker.docker.mongo: Compose Deployment" />
-        <item itemvalue="Docker.docker.kafka: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -353,7 +370,7 @@
       <workItem from="1728465448508" duration="14890000" />
       <workItem from="1728549519454" duration="21609000" />
       <workItem from="1728896201154" duration="16660000" />
-      <workItem from="1729006777071" duration="2455000" />
+      <workItem from="1729006777071" duration="37568000" />
     </task>
     <task id="LOCAL-00001" summary="Created Test classes and implemented Unite test for Consumer">
       <option name="closed" value="true" />
@@ -443,7 +460,23 @@
       <option name="project" value="LOCAL" />
       <updated>1728482912205</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Cucumber framework up and running.">
+      <option name="closed" value="true" />
+      <created>1729011078719</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1729011078719</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Component test added.">
+      <option name="closed" value="true" />
+      <created>1729095954479</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1729095954479</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +505,9 @@
     <MESSAGE value="Made method publish return a YellowEvent" />
     <MESSAGE value="Added tests at EventHandlerTest.&#10;Some refactoring." />
     <MESSAGE value="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Unit Testing EventHandler.&#10;Some refactoring in EventHandler's logic" />
+    <MESSAGE value="Cucumber framework up and running." />
+    <MESSAGE value="Component test added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Component test added." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -481,6 +516,11 @@
           <url>file://$PROJECT_DIR$/src/Main.java</url>
           <line>11</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

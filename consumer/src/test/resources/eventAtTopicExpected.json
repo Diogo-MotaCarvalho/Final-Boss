@@ -1,0 +1,28 @@
+{
+  "id": "2578296",
+  "name": "Benfica vs Barcelona",
+  "date": "27/10/2023",
+  "markets": [
+    {
+      "id": "1334",
+      "name": "Match Odds",
+      "selections": [
+        {
+          "id": 149,
+          "name": "Benfica",
+          "odd": 1.13
+        },
+        {
+          "id": 318,
+          "name": "Barcelona",
+          "odd": 1.1
+        },
+        {
+          "id": 871,
+          "name": "Draw",
+          "odd": 1.39
+        }
+      ]
+    }
+  ]
+}
