@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b67c518e-2c04-44f5-ab05-7d25f71fa921" name="Changes" comment="Component test added.">
-      <change afterPath="$PROJECT_DIR$/consumer/src/test/resources/eventAtTopicExpected.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/repository/Repository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/src/test/java/unitTests/repository/RepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/config/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/cucumber/steps/MarketUpdateAddSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/steps/MarketUpdateAddSteps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/java/cucumber/utils/CucumberUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/resources/marketUpdate.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/resources/marketUpdate.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/src/test/resources/yellowEvent.json" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/test/resources/yellowEvent.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/useCases/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/src/main/java/com/finalboss/useCases/EventHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +193,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.FinalClassConsumer.executor": "Run",
     "Spring Boot.FinalClassProducer.executor": "Run",
-    "git-widget-placeholder": "tests",
+    "git-widget-placeholder": "refactoring",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/diogo.carvalho/IdeaProjects/Final Boss/consumer/src/test/java",
     "node.js.detected.package.eslint": "true",
@@ -314,7 +310,9 @@
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration name="docker.mongo-express: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
