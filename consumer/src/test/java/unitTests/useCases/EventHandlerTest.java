@@ -2,9 +2,7 @@ package unitTests.useCases;
 
 import com.finalboss.domain.*;
 import com.finalboss.mapper.YellowEventMapper;
-import com.finalboss.port.EventPublisher;
 import com.finalboss.repository.Repository;
-import com.finalboss.repository.YellowEventRepository;
 import com.finalboss.useCases.EventHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +12,7 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -39,7 +35,7 @@ public class EventHandlerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        victim = new EventHandler(repoMock,mapperMock);
+        victim = new EventHandler(repoMock, mapperMock);
     }
 
     @Test
