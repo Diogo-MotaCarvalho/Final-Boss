@@ -3,6 +3,7 @@ package unitTests.useCases;
 import com.finalboss.domain.*;
 import com.finalboss.mapper.YellowEventMapper;
 import com.finalboss.port.EventPublisher;
+import com.finalboss.repository.Repository;
 import com.finalboss.repository.YellowEventRepository;
 import com.finalboss.useCases.EventHandler;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,11 +24,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class EventHandlerTest {
 
     @Mock
-    YellowEventRepository repoMock;
+    Repository repoMock;
     @Mock
     YellowEventMapper mapperMock;
-    @Mock
-    EventPublisher publisherMock;
     @InjectMocks
     EventHandler victim;
 
@@ -40,244 +39,61 @@ public class EventHandlerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        victim = new EventHandler(repoMock, mapperMock, publisherMock);
+        victim = new EventHandler(repoMock,mapperMock);
     }
 
-    //Testype1
     @Test
-    void existingEventAndMarketAddTest() {
+    void addYellowEventToRepository() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.ADD);
         YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
 
         when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEvent));
+        when(repoMock.addYellowEventToRepository(yellowEvent)).thenReturn(yellowEvent);
 
         victim.readOperation(marketUpdate);
 
-        verify(repoMock).findById(yellowEvent.id());
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(repoMock);
-        verifyNoMoreInteractions(mapperMock);
-        verifyNoInteractions(publisherMock);
-    }
-
-    @Test
-    void existingEventButNullMarketAddTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.ADD);
-        YellowEvent yellowEvent = buildYellowEventWithNullMarket(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEvent));
-
-        assertThrows(NullPointerException.class, () -> victim.readOperation(marketUpdate));
-    }
-
-    @Test
-    void existingEventButNoMarketAddTest() {
-
-        MarketUpdate marketUpdateOnRepo = buildMarketUpdateWithNewMarket(Operation.ADD);
-        YellowEvent yellowEventOnRepo = buildYellowEvent(marketUpdateOnRepo);
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.ADD);
-        YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
-
-        ArrayList<Market> expectedMarkets = new ArrayList<>();
-        expectedMarkets.addAll(yellowEvent.markets());
-        expectedMarkets.addAll(yellowEventOnRepo.markets());
-        YellowEvent expectedYellowEvent = new YellowEvent(
-                yellowEvent.id(),
-                yellowEvent.name(),
-                yellowEvent.date(),
-                expectedMarkets
-        );
-
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEventOnRepo.id())).thenReturn(Optional.of(yellowEventOnRepo));
-        when(mapperMock.buildMarket(marketUpdate)).thenReturn(buildMarket(marketUpdate));
-
-        victim.readOperation(marketUpdate);
 
         verify(mapperMock).buildYellowEvent(marketUpdate);
         verifyNoMoreInteractions(mapperMock);
-        verify(repoMock).findById(yellowEventOnRepo.id());
-        verify(repoMock).save(expectedYellowEvent);
+        verify(repoMock).addYellowEventToRepository(yellowEvent);
         verifyNoMoreInteractions(repoMock);
-        verify(publisherMock).publish(expectedYellowEvent);
-        verifyNoMoreInteractions(publisherMock);
+
+
     }
 
     @Test
-    void notExistingEventWithNewMarketAddTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.ADD);
-        YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.empty());
-        when(repoMock.save(yellowEvent)).thenReturn(yellowEvent);
-        when(publisherMock.publish(yellowEvent)).thenReturn(yellowEvent);
-
-        victim.readOperation(marketUpdate);
-
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(mapperMock);
-        verify(repoMock).findById(yellowEvent.id());
-        verify(repoMock).save(yellowEvent);
-        verifyNoMoreInteractions(repoMock);
-        verify(publisherMock).publish(yellowEvent);
-        verifyNoMoreInteractions(publisherMock);
-    }
-
-    //Testype1
-    @Test
-    void notExistingEventModifyTest() {
+    void modifyYellowEventToRepository() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.MODIFY);
         YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
 
         when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.empty());
+        when(repoMock.modifyYellowEventInRepository(yellowEvent)).thenReturn(yellowEvent);
 
         victim.readOperation(marketUpdate);
 
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verify(repoMock).findById(yellowEvent.id());
-        verifyNoMoreInteractions(mapperMock);
-        verifyNoMoreInteractions(repoMock);
-        verifyNoInteractions(publisherMock);
-    }
-
-    //Testype1
-    @Test
-    void existingEventButNoMarketModifyTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.MODIFY);
-        YellowEvent yellowEvent = buildYellowEventWithNullMarket(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEvent));
-
-        victim.readOperation(marketUpdate);
-
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verify(repoMock).findById(yellowEvent.id());
-        verifyNoMoreInteractions(mapperMock);
-        verifyNoMoreInteractions(repoMock);
-        verifyNoInteractions(publisherMock);
-    }
-
-    @Test
-    void existingEventBuMarketNotInRepoModifyTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.MODIFY);
-        YellowEvent yellowEvent = buildYellowEventWithNullMarket(marketUpdate);
-        YellowEvent yellowEventOnRepo = buildEventWithDifferentMarket(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEventOnRepo));
-        when(repoMock.save(yellowEventOnRepo)).thenReturn(yellowEventOnRepo);
-
-        victim.readOperation(marketUpdate);
-
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verify(repoMock).findById(yellowEvent.id());
-        verifyNoMoreInteractions(mapperMock);
-        verifyNoMoreInteractions(repoMock);
-        verifyNoInteractions(publisherMock);
-    }
-
-    @Test
-    void existingEventAndMarketModifyTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.MODIFY);
-        YellowEvent yellowEvent = buildEventWithModifiedMarket(marketUpdate);
-
-        MarketUpdate marketUpdateOnRepo = buildMarketUpdate(Operation.MODIFY);
-        YellowEvent yellowEventOnRepo = buildYellowEvent(marketUpdateOnRepo);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEventOnRepo));
-        when(repoMock.save(yellowEvent)).thenReturn(yellowEvent);
-        when(publisherMock.publish(yellowEvent)).thenReturn(yellowEvent);
-
-        victim.readOperation(marketUpdate);
 
         verify(mapperMock).buildYellowEvent(marketUpdate);
         verifyNoMoreInteractions(mapperMock);
-        verify(repoMock).findById(yellowEvent.id());
-        verify(repoMock).save(yellowEvent);
+        verify(repoMock).modifyYellowEventInRepository(yellowEvent);
         verifyNoMoreInteractions(repoMock);
-        verify(publisherMock).publish(yellowEvent);
-        verifyNoMoreInteractions(publisherMock);
     }
 
     @Test
-    void existingEventAndMarketRemoveTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.DELETE);
-        YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
-        YellowEvent yellowEventWithNoMarket = buildYellowEventWithEmptyMarket(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEvent));
-        when(repoMock.save(yellowEventWithNoMarket)).thenReturn(yellowEventWithNoMarket);
-        when(publisherMock.publish(yellowEventWithNoMarket)).thenReturn(yellowEventWithNoMarket);
-
-        victim.readOperation(marketUpdate);
-
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verifyNoMoreInteractions(mapperMock);
-        verify(repoMock).findById(yellowEvent.id());
-        verify(repoMock).save(yellowEventWithNoMarket);
-        verifyNoMoreInteractions(repoMock);
-        verify(publisherMock).publish(yellowEventWithNoMarket);
-        verifyNoMoreInteractions(publisherMock);
-
-
-    }
-
-    //Testype1
-    @Test
-    void existingEventButNotMarketRemoveTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.DELETE);
-        YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
-        YellowEvent yellowEventOnRepo = buildEventWithDifferentMarket(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.of(yellowEventOnRepo));
-
-        victim.readOperation(marketUpdate);
-
-        verify(mapperMock).buildYellowEvent(marketUpdate);
-        verify(repoMock).findById(yellowEvent.id());
-        verifyNoMoreInteractions(mapperMock);
-        verifyNoMoreInteractions(repoMock);
-        verifyNoInteractions(publisherMock);
-    }
-
-    //Type1
-    @Test
-    void notExistentEventRemoveTest() {
+    void removeYellowEventFromRepository() {
         MarketUpdate marketUpdate = buildMarketUpdate(Operation.DELETE);
         YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
 
-
         when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.empty());
+        when(repoMock.removeYellowEventFromRepository(yellowEvent)).thenReturn(yellowEvent);
 
         victim.readOperation(marketUpdate);
 
+
         verify(mapperMock).buildYellowEvent(marketUpdate);
         verifyNoMoreInteractions(mapperMock);
-        verify(repoMock).findById(yellowEvent.id());
+        verify(repoMock).removeYellowEventFromRepository(yellowEvent);
         verifyNoMoreInteractions(repoMock);
-        verifyNoInteractions(publisherMock);
-    }
 
-    @Test
-    void saveWithTryCatchThrowsTest() {
-        MarketUpdate marketUpdate = buildMarketUpdate(Operation.ADD);
-        YellowEvent yellowEvent = buildYellowEvent(marketUpdate);
-
-        when(mapperMock.buildYellowEvent(marketUpdate)).thenReturn(yellowEvent);
-        when(repoMock.findById(yellowEvent.id())).thenReturn(Optional.empty());
-        when(repoMock.save(yellowEvent)).thenThrow(IllegalArgumentException.class);
-
-        assertThrows(RuntimeException.class, () -> victim.readOperation(marketUpdate));
     }
 
     private MarketUpdate choseMarketMethod(int option, Operation operation) {
